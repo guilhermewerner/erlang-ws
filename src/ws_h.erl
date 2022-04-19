@@ -18,7 +18,7 @@ websocket_handle(_Data, State) ->
     {[], State}.
 
 websocket_info({timeout, _Ref, Msg}, State) ->
-    erlang:start_timer(1000, self(), <<"Tudo bem?">>),
+    %erlang:start_timer(1000, self(), <<"Tudo bem?">>),
     {[{text, Msg}], State};
 websocket_info(_Info, State) ->
     {[], State}.
