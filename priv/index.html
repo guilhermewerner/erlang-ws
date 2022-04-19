@@ -3,42 +3,41 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Websocket client</title>
+    <title>Erlang WebSocket</title>
 </head>
 
 <body>
 
     <header>
-        <h1>Websocket client</h1>
+        <h1>Erlang WebSocket</h1>
         <div id="status"></div>
     </header>
 
     <nav>
         <div id="connecting">
             <input type='text' id="server" value=""></input>
-            <button type="button" onclick="toggle_connection()">connection</button>
+            <button type="button" onclick="toggle_connection()">Conectar</button>
         </div>
 
         <div id="connected">
             <input type='text' id="message" value=""></input>
-            <button type="button" onclick="sendTxt();">send</button>
+            <button type="button" onclick="sendTxt();">Enviar</button>
         </div>
     </nav>
 
     <main id="content">
-        <button id="clear" onclick="clearScreen()">Clear text</button>
+        <button id="clear" onclick="clearScreen()">Limpar</button>
         <div id="output"></div>
     </main>
 
     <script type="text/javascript">
-
-        var websocket;
-        var server = document.getElementById("server");
-        var message = document.getElementById("message");
-        var connecting = document.getElementById("connecting");
-        var connected = document.getElementById("connected");
-        var content = document.getElementById("content");
-        var output = document.getElementById("output");
+        let websocket;
+        let server = document.getElementById("server");
+        let message = document.getElementById("message");
+        let connecting = document.getElementById("connecting");
+        let connected = document.getElementById("connected");
+        let content = document.getElementById("content");
+        let output = document.getElementById("output");
 
         server.value = "ws://" + window.location.host + "/websocket";
         connected.style.display = "none";
@@ -70,25 +69,25 @@
             if (websocket.readyState == websocket.OPEN) {
                 var msg = message.value;
                 websocket.send(msg);
-                showScreen('sending: ' + msg);
+                showScreen('<span><b>CLIENT</b>: ' + msg + '</span>');
             } else {
                 showScreen('websocket is not connected');
             };
         };
 
         function onOpen(evt) {
-            showScreen('<span style="color: green;">CONNECTED </span>');
+            showScreen('<span><b>SERVER</b>: Conectado</span>');
             connecting.style.display = "none";
             connected.style.display = "";
             content.style.display = "";
         };
 
         function onClose(evt) {
-            showScreen('<span style="color: red;">DISCONNECTED</span>');
+            showScreen('<span><b>SERVER</b>: Desconectado</span>');
         };
 
         function onMessage(evt) {
-            showScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
+            showScreen('<span><b>SERVER</b>: ' + evt.data + '</span>');
         };
 
         function onError(evt) {
